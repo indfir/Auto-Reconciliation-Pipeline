@@ -1,0 +1,14 @@
+# ── Sensitive config (contains folder IDs, bucket name, email) ──
+config.js
+
+# ── Google Apps Script credentials ──
+# Store your Service Account JSON in Script Properties (key = "GCS_KEY"), never here
+*.json
+service-account*.json
+credentials*.json
+
+# ── OS / editor junk ──
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
