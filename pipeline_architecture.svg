@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" width="1100" height="620" role="img" aria-labelledby="apTitle apDesc" font-family="ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif">
+<title id="apTitle">Auto-Reconciliation Pipeline — end-to-end architecture</title>
+<desc id="apDesc">Three stages. Stage one normalises issuer and bank files with Apps Script and uploads them to Cloud Storage. Stage two ingests them into BigQuery with an Airflow DAG of eighteen parallel tasks running hourly. Stage three reconciles three sources with a nine-month date spine and D-1 bank alignment, and publishes to BI dashboards.</desc>
+
+<defs>
+<marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+<path d="M0,0 L10,5 L0,10 z" fill="#3f5170"/>
+</marker>
+</defs>
+
+<rect width="1100" height="620" rx="16" fill="#0b0f17"/>
+
+<text x="40" y="46" fill="#38bdf8" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" letter-spacing="2">AUTO-RECONCILIATION PIPELINE</text>
+<text x="40" y="70" fill="#8b9bb4" font-size="13.5">Raw partner files to reconciled transactions — three stages, running unattended every day</text>
+
+<rect x="40" y="96" width="326" height="454" rx="14" fill="#0e1622" stroke="#1f2a3d"/>
+<rect x="387" y="96" width="326" height="454" rx="14" fill="#0e1622" stroke="#1f2a3d"/>
+<rect x="734" y="96" width="326" height="454" rx="14" fill="#0e1622" stroke="#1f2a3d"/>
+
+<g font-size="13.5" font-weight="600">
+<rect x="60" y="116" width="286" height="52" rx="10" fill="#123252" stroke="#185fa5"/>
+<text x="203" y="140" fill="#e6edf6" text-anchor="middle">Stage 1 — File formatter</text>
+<text x="203" y="158" fill="#85b7eb" text-anchor="middle" font-size="11.5" font-weight="400">Google Apps Script</text>
+
+<rect x="407" y="116" width="286" height="52" rx="10" fill="#123a2c" stroke="#0f6e56"/>
+<text x="550" y="140" fill="#e6edf6" text-anchor="middle">Stage 2 — Cloud ingestion</text>
+<text x="550" y="158" fill="#5dcaa5" text-anchor="middle" font-size="11.5" font-weight="400">Apache Airflow → BigQuery</text>
+
+<rect x="754" y="116" width="286" height="52" rx="10" fill="#3d2a10" stroke="#854f0b"/>
+<text x="897" y="140" fill="#e6edf6" text-anchor="middle">Stage 3 — Reconciliation</text>
+<text x="897" y="158" fill="#ef9f27" text-anchor="middle" font-size="11.5" font-weight="400">BigQuery SQL + dashboards</text>
+</g>
+
+<g>
+<rect x="60" y="188" width="138" height="62" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="76" y="211" fill="#e6edf6" font-size="12.5" font-weight="500">Google Drive</text>
+<text x="76" y="230" fill="#8b9bb4" font-size="11">Raw CSV / XLSX</text>
+<text x="76" y="244" fill="#8b9bb4" font-size="11">email &amp; portal drops</text>
+
+<rect x="208" y="188" width="138" height="62" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="224" y="211" fill="#e6edf6" font-size="12.5" font-weight="500">Apps Script</text>
+<text x="224" y="230" fill="#8b9bb4" font-size="11">Normalise &amp; validate</text>
+<text x="224" y="244" fill="#8b9bb4" font-size="11">2 batches · 2 cycles</text>
+
+<rect x="60" y="268" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="76" y="291" fill="#e6edf6" font-size="12.5" font-weight="500">12 payment issuers</text>
+<text x="76" y="310" fill="#8b9bb4" font-size="11">wallets, BNPL providers and bank QR channels</text>
+
+<rect x="60" y="336" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="76" y="359" fill="#e6edf6" font-size="12.5" font-weight="500">4 partner bank mutation files</text>
+<text x="76" y="378" fill="#8b9bb4" font-size="11">scheduled twice a week, two runs per day</text>
+
+<rect x="60" y="404" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="76" y="427" fill="#e6edf6" font-size="12.5" font-weight="500">Date normalisation</text>
+<text x="76" y="446" fill="#8b9bb4" font-size="11">8+ formats: serial · AM-PM · ISO · dd-MM-yy</text>
+
+<rect x="60" y="472" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="76" y="495" fill="#e6edf6" font-size="12.5" font-weight="500">JWT RS256 upload to Cloud Storage</text>
+<text x="76" y="514" fill="#8b9bb4" font-size="11">service-account signing — no OAuth library</text>
+</g>
+
+<g>
+<rect x="407" y="188" width="138" height="62" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="423" y="211" fill="#e6edf6" font-size="12.5" font-weight="500">Cloud Storage</text>
+<text x="423" y="230" fill="#8b9bb4" font-size="11">Formatted CSV</text>
+<text x="423" y="244" fill="#8b9bb4" font-size="11">one prefix per issuer</text>
+
+<rect x="555" y="188" width="138" height="62" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="571" y="211" fill="#e6edf6" font-size="12.5" font-weight="500">Airflow DAG</text>
+<text x="571" y="230" fill="#8b9bb4" font-size="11">18 tasks · hourly</text>
+<text x="571" y="244" fill="#8b9bb4" font-size="11">idempotent</text>
+
+<rect x="407" y="268" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="423" y="291" fill="#e6edf6" font-size="12.5" font-weight="500">GCSToBigQuery operator</text>
+<text x="423" y="310" fill="#8b9bb4" font-size="11">18 tasks running in parallel</text>
+
+<rect x="407" y="336" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="423" y="359" fill="#e6edf6" font-size="12.5" font-weight="500">WRITE_TRUNCATE loads</text>
+<text x="423" y="378" fill="#8b9bb4" font-size="11">safe to re-run — no duplicate rows</text>
+
+<rect x="407" y="404" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="423" y="427" fill="#34d399" font-size="12.5" font-weight="500">~53s mean duration</text>
+<text x="423" y="446" fill="#8b9bb4" font-size="11">100% success rate over 25 observed runs</text>
+
+<rect x="407" y="472" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="423" y="495" fill="#e6edf6" font-size="12.5" font-weight="500">Semicolon delimiter</text>
+<text x="423" y="514" fill="#8b9bb4" font-size="11">matches the Stage 1 output schema exactly</text>
+</g>
+
+<g>
+<rect x="754" y="188" width="138" height="62" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="770" y="211" fill="#e6edf6" font-size="12.5" font-weight="500">BigQuery</text>
+<text x="770" y="230" fill="#8b9bb4" font-size="11">18 source tables</text>
+<text x="770" y="244" fill="#8b9bb4" font-size="11">partitioned + clustered</text>
+
+<rect x="902" y="188" width="138" height="62" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="918" y="211" fill="#e6edf6" font-size="12.5" font-weight="500">BI dashboards</text>
+<text x="918" y="230" fill="#8b9bb4" font-size="11">Looker Studio</text>
+<text x="918" y="244" fill="#8b9bb4" font-size="11">Metabase · Tableau</text>
+
+<rect x="754" y="268" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="770" y="291" fill="#e6edf6" font-size="12.5" font-weight="500">3-source join</text>
+<text x="770" y="310" fill="#8b9bb4" font-size="11">production ledger · issuer report · bank file</text>
+
+<rect x="754" y="336" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="770" y="359" fill="#e6edf6" font-size="12.5" font-weight="500">Date spine — 9 months</text>
+<text x="770" y="378" fill="#8b9bb4" font-size="11">cross join: every date × issuer combination</text>
+
+<rect x="754" y="404" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="770" y="427" fill="#e6edf6" font-size="12.5" font-weight="500">D-1 bank alignment</text>
+<text x="770" y="446" fill="#8b9bb4" font-size="11">T+1 receipts shifted back to transaction date</text>
+
+<rect x="754" y="472" width="286" height="56" rx="9" fill="#131a28" stroke="#1f2a3d"/>
+<text x="770" y="495" fill="#e6edf6" font-size="12.5" font-weight="500">Gap metrics</text>
+<text x="770" y="514" fill="#8b9bb4" font-size="11">per issuer, per date, both directions</text>
+</g>
+
+<g stroke="#3f5170" stroke-width="1.8" fill="none" marker-end="url(#pa)">
+<path d="M198,219 H202"/>
+<path d="M366,219 H383"/>
+<path d="M545,219 H551"/>
+<path d="M713,219 H730"/>
+<path d="M892,219 H898"/>
+</g>
+
+<rect x="40" y="566" width="1020" height="34" rx="9" fill="#101828" stroke="#1f2a3d"/>
+<text x="60" y="588" fill="#8b9bb4" font-size="11.5">Partner names are omitted deliberately — this diagram describes the architecture, not the commercial relationships.</text>
+</svg>
