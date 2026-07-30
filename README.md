@@ -17,6 +17,9 @@
 
 ![Pipeline architecture](pipeline_architecture.svg)
 
+*Stages 1–3 — the data flow. Stage 4, the Control Center that sits on top, is diagrammed
+[further down](#stage-4--recon-control-center).*
+
 | Stage | Technology | Role |
 |---|---|---|
 | **Stage 1** | Google Apps Script | Normalise raw CSV / XLSX → upload to Cloud Storage |
@@ -144,6 +147,8 @@ One BigQuery query joins all three sources and computes gap metrics per
 The pipeline was reliable, but invisible. The Control Center is an internal web app that puts the
 whole daily cycle behind one login.
 
+![Recon Control Center — data flow](control_center_flow.svg)
+
 **▶ [Interactive demo](https://work.indfir.com/demo/recon-control-center/)** (synthetic data)
 
 | Tab | What it does |
@@ -214,7 +219,8 @@ auto-reconciliation-pipeline/
 ├── README.md                   ← you are here
 ├── .gitignore                  ← excludes config.js and credentials
 ├── config.example.js           ← copy to config.js, fill in your values
-├── pipeline_architecture.svg   ← architecture diagram
+├── pipeline_architecture.svg   ← stages 1–3 architecture
+├── control_center_flow.svg     ← stage 4 data flow
 └── src/
     ├── issuer.js               ← Stage 1: formatter for 12 payment issuers
     ├── bank.js                 ← Stage 1: formatter for 4 bank mutation files
